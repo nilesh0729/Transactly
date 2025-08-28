@@ -20,6 +20,8 @@ func NewServer(store Anuskh.Store) *Server {
 		v.RegisterValidation("currency",validCurrency)
 	}
 
+	router.POST("/user", server.CreateUser)
+
 	router.POST("/accounts", server.CreateAccount)
 
 	router.GET("/accounts/:id", server.GetAccount)
