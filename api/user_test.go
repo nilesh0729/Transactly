@@ -79,7 +79,7 @@ func TestCreateUserAPI(t *testing.T) {
 			},
 			CheckResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
-				RequireBodyMatching(t, recorder.Body, user)
+				RequireBodyMatchingUser(t, recorder.Body, user)
 			},
 		},
 		{
@@ -185,7 +185,7 @@ func TestCreateUserAPI(t *testing.T) {
 	}
 }
 
-func RequireBodyMatching(t *testing.T, body *bytes.Buffer, user Anuskh.User) {
+func RequireBodyMatchingUser(t *testing.T, body *bytes.Buffer, user Anuskh.User) {
 
 	data, err := io.ReadAll(body)
 	require.NoError(t, err)
