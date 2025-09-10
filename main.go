@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -24,7 +25,10 @@ func main(){
 
 
 	store := Anuskh.NewTxConn(conn)
-	server := api.NewServer(store)
+	server, err := api.NewServer(store, config)
+	if err !=nil{
+		fmt.Printf("cannot create Server: %v", err)
+	}
 
 
 	err = server.Start(config.ServerAddress)

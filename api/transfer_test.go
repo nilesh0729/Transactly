@@ -337,7 +337,7 @@ func TestTransfersAPI(t *testing.T) {
 
 			tc.buildStubs(store)
 			
-			Server := NewServer(store)
+			Server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			

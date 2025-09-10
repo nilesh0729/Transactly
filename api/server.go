@@ -1,24 +1,49 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
+	"github.com/nilesh0729/OrdinaryBank/token"
+	"github.com/nilesh0729/OrdinaryBank/util"
 )
 
 type Server struct {
-	store  Anuskh.Store
-	router *gin.Engine
+	config     util.Config
+	store      Anuskh.Store
+	tokenMaker token.Maker
+	router     *gin.Engine
 }
 
-func NewServer(store Anuskh.Store) *Server {
-	server := &Server{store: store}
+func NewServer(store Anuskh.Store, config util.Config) (*Server, error) {
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	if err != nil {
+		return nil, fmt.Errorf("cannot create Token maker : %w", err)
+	}
+	server := &Server{
+		config: config,
+		store:      store,
+		tokenMaker: tokenMaker,
+	}
+	
+
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("currency", validCurrency)
+	}
+	
+	server.SetupRouter()
+
+	return server, nil
+}
+
+func (server *Server) SetupRouter(){
 	router := gin.Default()
 
-	if v, ok := binding.Validator.Engine().(*validator.Validate); ok{
-		v.RegisterValidation("currency",validCurrency)
-	}
+
+	router.POST("/user/login", server.LoginUser)
 
 	router.POST("/user", server.CreateUser)
 
@@ -32,9 +57,7 @@ func NewServer(store Anuskh.Store) *Server {
 
 	server.router = router
 
-	return server
 }
-
 func (server *Server) Start(address string) error {
 	return server.router.Run(address)
 }
