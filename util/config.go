@@ -1,17 +1,23 @@
 package util
 
-import "github.com/spf13/viper"
+import (
+	"time"
 
-type Config struct{
-	DBDriver string `mapstructure:"DB_DRIVER"`
-	DBSource string `mapstructure:"DB_SOURCE"`
-	ServerAddress string `mapstructure:"SERVER_ADDRESS"`
+	"github.com/spf13/viper"
+)
+
+type Config struct {
+	DBDriver              string        `mapstructure:"DB_DRIVER"`
+	DBSource              string        `mapstructure:"DB_SOURCE"`
+	ServerAddress         string        `mapstructure:"SERVER_ADDRESS"`
+	TokenSymmetricKey     string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
+	Access_Token_Duration time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 }
 
-func LoadConfig(path string)(config Config, err error) {
+func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigType("env")
-    viper.SetConfigName(".env")
+	viper.SetConfigName(".env")
 	viper.AutomaticEnv()
 
 	err = viper.ReadInConfig()
