@@ -42,18 +42,19 @@ func NewServer(store Anuskh.Store, config util.Config) (*Server, error) {
 func (server *Server) SetupRouter(){
 	router := gin.Default()
 
+	router.POST("/user", server.CreateUser)
 
 	router.POST("/user/login", server.LoginUser)
 
-	router.POST("/user", server.CreateUser)
+	authRoutes:= router.Group("/").Use(authMiddleware(server.tokenMaker))
 
-	router.POST("/accounts", server.CreateAccount)
+	authRoutes.POST("/accounts", server.CreateAccount)
 
-	router.GET("/accounts/:id", server.GetAccount)
+	authRoutes.GET("/accounts/:id", server.GetAccount)
 
-	router.GET("/accounts", server.ListAccount)
+	authRoutes.GET("/accounts", server.ListAccount)
 
-	router.POST("/transfers", server.CreateTransfer)
+	authRoutes.POST("/transfers", server.CreateTransfer)
 
 	server.router = router
 
