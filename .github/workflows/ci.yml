@@ -49,7 +49,12 @@ jobs:
       uses: actions/Checkout@v4
 
     - name: Set up environment
-      run: cp .env.example .env
+      run: |
+        cp .env.example .env
+        sed -i "s/password/${{ secrets.POSTGRES_PASSWORD }}/" .env
+        sed -i "s/root/${{ secrets.POSTGRES_USER }}/" .env
+        sed -i "s/Hiten/${{ secrets.POSTGRES_DB }}/" .env
+
 
     - name: Install golang-migrate
       run: |
