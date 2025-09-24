@@ -48,6 +48,9 @@ jobs:
     - name: Checkout code into the module directory
       uses: actions/Checkout@v4
 
+    - name: Set up environment
+      run: cp .env.example .env
+
     - name: Install golang-migrate
       run: |
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz | tar xvz
