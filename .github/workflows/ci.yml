@@ -10,64 +10,36 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   test:
-    name: Test
     runs-on: ubuntu-latest
-
-    # Service containers to run with `container-job`
     services:
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
+        image: postgres:15
+        ports:
+          - 5432:5432
         env:
-          POSTGRES_DB: Hiten
           POSTGRES_USER: root
-          POSTGRES_PASSWORD: SituBen
-        # Set health checks to wait until postgres has started
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: Hiten
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U root"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        # post
-        ports: 
-          - 5433:5432
-        
-
 
     steps:
-    
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.24'
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      - name: Prepare .env for CI
+        run: |
+          cp .env.example .env
+          sed -i "s/localhost/postgres/" .env
+          sed -i "s/DB_USER=root/DB_USER/root/" .env
+          sed -i "s/DB_PASSWORD=SituBen/DB_PASSWORD/secret/" .env
+          sed -i "s/DB_NAME=Hiten/DB_NAME/Hiten/" .env
+      - name: Run tests
+        run: make Test
 
-    - name: Checkout code into the module directory
-      uses: actions/Checkout@v4
-
-    # In the workflow
-    - name: Set up .env for CI
-      run: |
-        cp .env.example .env
-        sed -i "s/password/${{ secrets.POSTGRES_PASSWORD }}/" .env
-        sed -i "s/root/${{ secrets.POSTGRES_USER }}/" .env
-        sed -i "s/Hiten/${{ secrets.POSTGRES_DB }}/" .env
-        sed -i "s/localhost/postgres/" .env
-        sed -i "s/5433/5432/" .env
-
-
-    - name: Install golang-migrate
-      run: |
-        curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz | tar xvz
-        sudo mv migrate /usr/bin
-        which migrate
-
-    - name: Run Migration
-      run: make MigrateUp
-
-      
-    - name: test
-      run: make Test
