@@ -48,12 +48,15 @@ jobs:
     - name: Checkout code into the module directory
       uses: actions/Checkout@v4
 
-    - name: Set up environment
+    # In the workflow
+    - name: Set up .env for CI
       run: |
         cp .env.example .env
         sed -i "s/password/${{ secrets.POSTGRES_PASSWORD }}/" .env
         sed -i "s/root/${{ secrets.POSTGRES_USER }}/" .env
         sed -i "s/Hiten/${{ secrets.POSTGRES_DB }}/" .env
+        sed -i "s/localhost/postgres/" .env
+        sed -i "s/5433/5432/" .env
 
 
     - name: Install golang-migrate
