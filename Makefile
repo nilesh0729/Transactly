@@ -8,10 +8,10 @@ Dropdb:
 	docker exec -it jansi dropdb -U root Hiten
 
 MigrateUp:
-	migrate -path db/migration -database "postgres://root:SituBen@localhost:5433/Hiten?sslmode=disable" -verbose up
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up
 
 MigrateDown:
-	migrate -path db/migration -database "postgres://root:SituBen@localhost:5433/Hiten?sslmode=disable" -verbose down
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down
 
 Sqlc:
 	sqlc generate
