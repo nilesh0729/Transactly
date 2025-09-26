@@ -19,7 +19,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:14-alpine
         # Provide the password for postgres
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
@@ -44,6 +44,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Create .env file from secrets
+      run: |
+        echo "DB_DRIVER=postgres" > .env
+        echo "DB_SOURCE=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable" >> .env
+        echo "SERVER_ADDRESS=0.0.0.0:8080" >> .env
+        echo "TOKEN_SYMMETRIC_KEY=${{ secrets.TOKEN_SYMMETRIC_KEY }}" >> .env
+        echo "ACCESS_TOKEN_DURATION=15m" >> .env
+
     - name: Install golang-migrate
       run: |
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz | tar xvz
@@ -51,16 +59,7 @@ jobs:
 
     - name: Run Migration
       run: make MigrateUp
-      env:
-        # Connect to the service container via localhost on the mapped port
-        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
 
     - name: Run Go Tests
       run: make Test
-      env:
-        # Connect to the service container via localhost on the mapped port
-        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
-        TOKEN_SYMMETRIC_KEY: ${{ secrets.TOKEN_SYMMETRIC_KEY }}
-        DB_DRIVER: postgres
-        SERVER_ADDRESS: 0.0.0.0:8080
 
