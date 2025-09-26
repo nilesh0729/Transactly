@@ -19,7 +19,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:14-alpine
+        image: postgres
         # Provide the password for postgres
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
@@ -32,7 +32,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          # The port inside the runner network is 5432
+          # Map the container port 5432 to the host runner's port 5432
           - 5432:5432
 
     steps:
@@ -52,12 +52,15 @@ jobs:
     - name: Run Migration
       run: make MigrateUp
       env:
-        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
+        # Connect to the service container via localhost on the mapped port
+        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
 
     - name: Run Go Tests
       run: make Test
       env:
-        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
+        # Connect to the service container via localhost on the mapped port
+        DB_SOURCE: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?sslmode=disable
         TOKEN_SYMMETRIC_KEY: ${{ secrets.TOKEN_SYMMETRIC_KEY }}
         DB_DRIVER: postgres
         SERVER_ADDRESS: 0.0.0.0:8080
+
