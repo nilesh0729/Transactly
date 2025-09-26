@@ -1,3 +1,7 @@
+# Load variables from .env file and export them to the shell
+include .env
+export
+
 Container:
 	docker run --name jansi -p 5433:5432 -e POSTGRES_PASSWORD=SituBen -e POSTGRES_USER=root -d postgres
 
@@ -25,4 +29,5 @@ Server:
 Mock:
 	mockgen -package mockDB -destination db/Mock/Store.go github.com/nilesh0729/OrdinaryBank/db/Result Store
 
-.PHONY:	Container	Createdb	Dropdb	MigrateDown	MigrateUp	Sqlc	Test	Server	Mock
+.PHONY: Container Createdb Dropdb MigrateDown MigrateUp Sqlc Test Server Mock
+
