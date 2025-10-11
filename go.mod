@@ -1,8 +1,6 @@
 module github.com/nilesh0729/OrdinaryBank
 
-go 1.24.0
-
-toolchain go1.24.6
+go 1.25.2
 
 require (
 	github.com/aead/chacha20poly1305 v0.0.0-20170617001512-233f39982aeb
