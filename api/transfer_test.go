@@ -11,10 +11,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
-	mockDB "github.com/nilesh0729/OrdinaryBank/db/Mock"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/token"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	mockDB "github.com/nilesh0729/Transactly/db/Mock"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/token"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
@@ -132,7 +132,6 @@ func TestTransfersAPI(t *testing.T) {
 					Times(1).
 					Return(Anuskh.Account{}, sql.ErrNoRows)
 
-				
 				store.EXPECT().
 					TransferTx(gomock.Any(), gomock.Any()).
 					Times(0)

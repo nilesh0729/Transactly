@@ -1,4 +1,4 @@
-module github.com/nilesh0729/OrdinaryBank
+module github.com/nilesh0729/Transactly
 
 go 1.25.2
 

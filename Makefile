@@ -27,7 +27,7 @@ Server:
 	go run main.go
 
 Mock:
-	mockgen -package mockDB -destination db/Mock/Store.go github.com/nilesh0729/OrdinaryBank/db/Result Store
+	mockgen -package mockDB -destination db/Mock/Store.go github.com/nilesh0729/Transactly/db/Result Store
 
 .PHONY: Container Createdb Dropdb MigrateDown MigrateUp Sqlc Test Server Mock
 

@@ -7,23 +7,19 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	"github.com/nilesh0729/Transactly/util"
 )
 
 var testQueries *Queries
 var TestDb *sql.DB
 
-
-
 func TestMain(m *testing.M) {
 	var err error
 
 	config, err := util.LoadConfig("../..")
-    if err != nil {
+	if err != nil {
 		log.Fatal("Can't Load Config: ", err)
 	}
-		
-
 
 	TestDb, err = sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {

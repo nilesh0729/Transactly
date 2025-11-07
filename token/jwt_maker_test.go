@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
@@ -48,14 +48,14 @@ func TestExpiredJWTToken(t *testing.T) {
 
 }
 
-func TestInvalidTokenAlgNone(t *testing.T){
-	payload, err := NewPayload(util.RandomOwner(),time.Minute)
+func TestInvalidTokenAlgNone(t *testing.T) {
+	payload, err := NewPayload(util.RandomOwner(), time.Minute)
 	require.NoError(t, err)
 
 	maker, err := NewJWTMAKER(util.RandomString(32))
 	require.NoError(t, err)
-	
-	jwtToken :=  jwt.NewWithClaims(jwt.SigningMethodNone,payload)
+
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodNone, payload)
 	token, err := jwtToken.SignedString(jwt.UnsafeAllowNoneSignatureType)
 	require.NoError(t, err)
 
@@ -64,5 +64,4 @@ func TestInvalidTokenAlgNone(t *testing.T){
 	require.EqualError(t, err, ErrInvalidToken.Error())
 	require.Nil(t, payload)
 
-	
 }
