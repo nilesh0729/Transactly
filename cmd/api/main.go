@@ -6,9 +6,9 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/nilesh0729/Transactly/api"
-	Anuskh "github.com/nilesh0729/Transactly/db/Result"
-	"github.com/nilesh0729/Transactly/util"
+	"github.com/nilesh0729/Transactly/internal/api"
+	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
+	"github.com/nilesh0729/Transactly/internal/util"
 )
 
 func main() {

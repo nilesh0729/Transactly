@@ -6,9 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	Anuskh "github.com/nilesh0729/Transactly/db/Result"
-	"github.com/nilesh0729/Transactly/token"
-	"github.com/nilesh0729/Transactly/util"
+	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
+	"github.com/nilesh0729/Transactly/internal/token"
+	"github.com/nilesh0729/Transactly/internal/util"
+	"github.com/gin-contrib/cors"
 )
 
 type Server struct {
@@ -40,6 +41,11 @@ func NewServer(store Anuskh.Store, config util.Config) (*Server, error) {
 
 func (server *Server) SetupRouter() {
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true // For development only
+	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
+	router.Use(cors.New(config))
 
 	router.POST("/user", server.CreateUser)
 

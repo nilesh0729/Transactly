@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
-	"github.com/nilesh0729/Transactly/util"
+	"github.com/nilesh0729/Transactly/internal/util"
 )
 
 var testQueries *Queries

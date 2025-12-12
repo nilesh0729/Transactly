@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Transactly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="split-screen">
+        <div class="left-panel">
+            <div class="panel-content">
+                <div class="logo">
+                    <i class="fa-solid fa-wallet"></i> Transactly
+                </div>
+                <h1>Welcome Back!</h1>
+                <p>Access your dashboard, track your expenses, and manage your assets securely.</p>
+                <div class="circle-deco"></div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Log In</h2>
+                    <p>Please enter your details.</p>
+                </div>
+
+                <form id="loginForm">
+                    
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user input-icon"></i>
+                            <input type="text" id="username" name="username" placeholder="Enter your username" pattern="[a-zA-Z0-9]+" title="Alphanumeric characters only" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••" minlength="8" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-pass">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Log In</button>
+
+                    <p class="signup-link">
+                        Don't have an account? <a href="signup.html">Sign Up</a>
+                    </p>
+
+                    <a href="index.html" class="back-link"><i class="fa-solid fa-chevron-left"></i> Back to Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -8,14 +8,13 @@
   <p align="center">
     A Secure, High-Performance Banking Service API
     <br />
-    <a href="#api-reference"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="#getting-started">View Demo</a>
     ·
-    <a href="https://github.com/your_username/transactly/issues">Report Bug</a>
+    <a href="https://github.com/nilesh0729/transactly/issues">Report Bug</a>
     ·
-    <a href="https://github.com/your_username/transactly/issues">Request Feature</a>
+    <a href="https://github.com/nilesh0729/transactly/issues">Request Feature</a>
   </p>
 </div>
 

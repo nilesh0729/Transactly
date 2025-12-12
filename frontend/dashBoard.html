@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Transactly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-wallet"></i> Transactly
+            </div>
+            <nav class="side-nav">
+                <a href="#" class="active"><i class="fa-solid fa-house"></i> Overview</a>
+                <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Transactions</a>
+                <a href="#"><i class="fa-solid fa-credit-card"></i> Cards</a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+            </nav>
+            <div class="logout-section">
+                <a href="index.html"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-bar">
+                <div class="welcome-text">
+                    <h1>Welcome back, <span id="user-firstname">Alex</span>!</h1> <p>Here's what's happening with your money today.</p>
+                </div>
+                <div class="user-actions">
+                    <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+                    <button class="icon-btn"><i class="fa-solid fa-gear"></i></button> <div class="profile-pic">
+                        <img src="https://ui-avatars.com/api/?name=Alex+Morgan&background=6366f1&color=fff" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                
+                <div class="card balance-card">
+                    <div class="balance-header">
+                        <span>Total Balance</span>
+                        <button class="eye-btn"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <div class="balance-amount">
+                        <span id="currency-symbol">$</span> <span id="user-balance">24,500.00</span>
+                    </div>
+                    <div class="balance-footer">
+                        <span class="currency-tag" id="user-currency">USD</span>
+                        <span>Available</span>
+                    </div>
+                </div>
+
+                <div class="card actions-card">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn primary">
+                            <div class="icon"><i class="fa-solid fa-paper-plane"></i></div>
+                            <span>Send Money</span> </button>
+                        <button class="action-btn">
+                            <div class="icon"><i class="fa-solid fa-arrow-down"></i></div>
+                            <span>Request</span>
+                        </button>
+                        <button class="action-btn">
+                            <div class="icon"><i class="fa-solid fa-receipt"></i></div>
+                            <span>History</span>
+                        </button>
+                        <button class="action-btn">
+                            <div class="icon"><i class="fa-solid fa-qrcode"></i></div>
+                            <span>Scan QR</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card details-card">
+                    <div class="card-header">
+                        <h3>Account Details</h3>
+                        <button class="edit-btn">Edit</button>
+                    </div>
+                    <div class="details-list">
+                        <div class="detail-item">
+                            <span class="label">Username</span>
+                            <span class="value" id="username">alexmorgan99</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Email</span>
+                            <span class="value" id="email">alex.morgan@example.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Contact No.</span>
+                            <span class="value" id="contact">+1 (555) 019-2834</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Account Number</span>
+                            <span class="value" id="account-no">**** 8829</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Currency</span>
+                            <span class="value" id="currency">USD (United States Dollar)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Member Since</span>
+                            <span class="value" id="created-at">Oct 24, 2023</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card transactions-card">
+                    <h3>Recent Activity</h3>
+                    <ul class="transaction-list">
+                        <li>
+                            <div class="t-icon up"><i class="fa-brands fa-netflix"></i></div>
+                            <div class="t-info">
+                                <h4>Netflix Subscription</h4>
+                                <small>Today, 10:00 AM</small>
+                            </div>
+                            <div class="t-amount negative">-$15.00</div>
+                        </li>
+                        <li>
+                            <div class="t-icon down"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="t-info">
+                                <h4>Incoming Transfer</h4>
+                                <small>Yesterday, 4:30 PM</small>
+                            </div>
+                            <div class="t-amount positive">+$1,200.00</div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
