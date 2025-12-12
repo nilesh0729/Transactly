@@ -14,13 +14,23 @@ type Config struct {
 	AccessTokenDuration time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 }
 
-func LoadConfig(path string) (config Config, err error) {
-	viper.AddConfigPath(path)
-	viper.SetConfigType("env")
-	viper.SetConfigName(".env")
-	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
+func LoadConfig(path string) (config Config, err error) {
+    viper.AddConfigPath(path)      // Look in the path passed in
+    viper.AddConfigPath(".")       // Look in current directory (backup)
+    viper.AddConfigPath("../")     // Look one folder up
+    viper.AddConfigPath("../..")   // Look two folders up (Finds root from internal/db/...)
+    viper.AddConfigPath("../../..")// Look three folders up (Just in case)
+
+    viper.SetConfigName(".env")     // Ideally rename your .env to app.env to avoid confusion
+    viper.SetConfigType("env") 
+
+    // IF you want to keep the file named strictly ".env", use this instead of SetConfigName:
+    // viper.SetConfigFile(".env") 
+    
+    viper.AutomaticEnv()
+
+    err = viper.ReadInConfig()
 	if err != nil {
 		return
 	}
