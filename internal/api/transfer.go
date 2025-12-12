@@ -8,8 +8,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	Anuskh "github.com/nilesh0729/Transactly/db/Result"
-	"github.com/nilesh0729/Transactly/token"
+	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
+	"github.com/nilesh0729/Transactly/internal/token"
 )
 
 type TransferRequest struct {

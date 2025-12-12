@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nilesh0729/Transactly/util"
+	"github.com/nilesh0729/Transactly/internal/util"
 	"github.com/stretchr/testify/require"
 )
 

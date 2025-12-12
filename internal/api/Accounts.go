@@ -5,11 +5,11 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/nilesh0729/Transactly/token"
+	"github.com/nilesh0729/Transactly/internal/token"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
-	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
 )
 
 type CreateAccountRequest struct {

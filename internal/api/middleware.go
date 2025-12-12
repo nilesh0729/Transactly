@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nilesh0729/Transactly/token"
+	"github.com/nilesh0729/Transactly/internal/token"
 )
 
 const (

@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	Anuskh "github.com/nilesh0729/Transactly/db/Result"
-	"github.com/nilesh0729/Transactly/util"
+	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
+	"github.com/nilesh0729/Transactly/internal/util"
 	"github.com/stretchr/testify/require"
 )
 
