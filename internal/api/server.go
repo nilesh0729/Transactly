@@ -3,13 +3,13 @@ package api
 import (
 	"fmt"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	Anuskh "github.com/nilesh0729/Transactly/internal/db/Result"
 	"github.com/nilesh0729/Transactly/internal/token"
 	"github.com/nilesh0729/Transactly/internal/util"
-	"github.com/gin-contrib/cors"
 )
 
 type Server struct {
@@ -60,6 +60,8 @@ func (server *Server) SetupRouter() {
 	authRoutes.GET("/accounts", server.ListAccount)
 
 	authRoutes.POST("/transfers", server.CreateTransfer)
+	authRoutes.GET("/transfers", server.ListTransfer)
+	authRoutes.GET("/accounts/:id/entries", server.ListEntry)
 
 	server.router = router
 

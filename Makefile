@@ -24,10 +24,9 @@ Test:
 	go test -v -cover ./...
 
 Server:
-	go run main.go
+	go run cmd/api/main.go
 
 Mock:
 	mockgen -package mockDB -destination db/Mock/Store.go github.com/nilesh0729/Transactly/internal/db/Result Store
 
 .PHONY: Container Createdb Dropdb MigrateDown MigrateUp Sqlc Test Server Mock
-
