@@ -12,10 +12,10 @@ Dropdb:
 	docker exec -it jansi dropdb -U root Hiten
 
 MigrateUp:
-	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up
+	migrate -path internal/db/migration -database "$(DB_SOURCE)" -verbose up
 
 MigrateDown:
-	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down
+	migrate -path internal/db/migration -database "$(DB_SOURCE)" -verbose down
 
 Sqlc:
 	sqlc generate
