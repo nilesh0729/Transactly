@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
-func newTestServer(t *testing.T, store Anuskh.Store)*Server{
+func newTestServer(t *testing.T, store Anuskh.Store) *Server {
 	config := util.Config{
-		TokenSymmetricKey: util.RandomString(32),
+		TokenSymmetricKey:   util.RandomString(32),
 		AccessTokenDuration: time.Minute,
 	}
 

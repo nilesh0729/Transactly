@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/token"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/token"
+	"github.com/nilesh0729/Transactly/util"
 )
 
 type Server struct {
@@ -24,29 +24,28 @@ func NewServer(store Anuskh.Store, config util.Config) (*Server, error) {
 		return nil, fmt.Errorf("cannot create Token maker : %w", err)
 	}
 	server := &Server{
-		config: config,
+		config:     config,
 		store:      store,
 		tokenMaker: tokenMaker,
 	}
-	
 
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("currency", validCurrency)
 	}
-	
+
 	server.SetupRouter()
 
 	return server, nil
 }
 
-func (server *Server) SetupRouter(){
+func (server *Server) SetupRouter() {
 	router := gin.Default()
 
 	router.POST("/user", server.CreateUser)
 
 	router.POST("/user/login", server.LoginUser)
 
-	authRoutes:= router.Group("/").Use(authMiddleware(server.tokenMaker))
+	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 
 	authRoutes.POST("/accounts", server.CreateAccount)
 

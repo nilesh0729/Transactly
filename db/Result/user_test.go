@@ -4,19 +4,19 @@ import (
 	"context"
 	"testing"
 
-	"github.com/nilesh0729/OrdinaryBank/util"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
-func CreateRandomUser(t *testing.T) User{
-	hashPassword, err:= util.HashedPassword(util.RandomString(8))
+func CreateRandomUser(t *testing.T) User {
+	hashPassword, err := util.HashedPassword(util.RandomString(8))
 	require.NoError(t, err)
 
 	arg := CreateUserParams{
-		Username: util.RandomOwner(),
+		Username:       util.RandomOwner(),
 		HashedPassword: hashPassword,
-		FullName: util.RandomOwner(),
-		Email: util.RandomEmail(),
+		FullName:       util.RandomOwner(),
+		Email:          util.RandomEmail(),
 	}
 	user, err := testQueries.CreateUser(context.Background(), arg)
 	require.NoError(t, err)
@@ -27,19 +27,19 @@ func CreateRandomUser(t *testing.T) User{
 	require.Equal(t, user.FullName, arg.FullName)
 	require.Equal(t, user.Email, arg.Email)
 
-	require.True(t,user.PasswordChangedAt.IsZero())
-	require.NotZero(t , user.CreatedAt)
+	require.True(t, user.PasswordChangedAt.IsZero())
+	require.NotZero(t, user.CreatedAt)
 
 	return user
 }
 
-func TestCreateUser(t *testing.T){
+func TestCreateUser(t *testing.T) {
 	CreateRandomUser(t)
 }
 
-func TestGetUser(t *testing.T){
+func TestGetUser(t *testing.T) {
 	user := CreateRandomUser(t)
-	user2, err := testQueries.GetUser(context.Background(),user.Username)
+	user2, err := testQueries.GetUser(context.Background(), user.Username)
 	require.NoError(t, err)
 	require.NotEmpty(t, user2)
 

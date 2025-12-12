@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nilesh0729/OrdinaryBank/util"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
 func CreateRandomAccount(t *testing.T) Account {
-	user:= CreateRandomUser(t)
+	user := CreateRandomUser(t)
 	arg := CreateAccountsParams{
 		Owner:    user.Username,
 		Currency: util.RandomCurrency(),
@@ -97,17 +97,17 @@ func TestListAccounts(t *testing.T) {
 	}
 
 	arg := ListAccountsParams{
-		Owner: lastAccount.Owner,
+		Owner:  lastAccount.Owner,
 		Limit:  5,
 		Offset: 0,
 	}
 
 	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)
-	require.NotEmpty(t,accounts)
+	require.NotEmpty(t, accounts)
 
 	for _, account := range accounts {
 		require.NotEmpty(t, account)
-		require.Equal(t, lastAccount.Owner, account.Owner )
+		require.Equal(t, lastAccount.Owner, account.Owner)
 	}
 }

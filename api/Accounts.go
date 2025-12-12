@@ -5,15 +5,14 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/nilesh0729/OrdinaryBank/token"
+	"github.com/nilesh0729/Transactly/token"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
 )
 
 type CreateAccountRequest struct {
-	
 	Currency string `json:"currency" binding:"required,currency"`
 }
 
@@ -72,7 +71,7 @@ func (server *Server) GetAccount(ctx *gin.Context) {
 	}
 
 	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
-	if account.Owner != authPayload.Username{
+	if account.Owner != authPayload.Username {
 		err := errors.New("Account Does not belong to the Authenticated user")
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
@@ -97,7 +96,7 @@ func (server *Server) ListAccount(ctx *gin.Context) {
 
 	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
 	arg := Anuskh.ListAccountsParams{
-		Owner: authPayload.Username,
+		Owner:  authPayload.Username,
 		Limit:  (req.PageSize),
 		Offset: (req.PageID - 1) * req.PageSize,
 	}

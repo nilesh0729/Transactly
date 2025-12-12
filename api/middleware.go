@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nilesh0729/OrdinaryBank/token"
+	"github.com/nilesh0729/Transactly/token"
 )
 
-const ( 
-	authorizationHeaderKey  = "authorization"  //for header matching
-	authorizationTypeBearer = "bearer"         // for checking token type
+const (
+	authorizationHeaderKey  = "authorization"         //for header matching
+	authorizationTypeBearer = "bearer"                // for checking token type
 	authorizationPayloadKey = "authorization_payload" //used as key for ctx.set(key,TheValueYouWantToStore) to store payload
 )
 

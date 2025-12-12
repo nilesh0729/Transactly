@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/util"
 )
 
 type CreateUserRequest struct {
@@ -28,11 +28,11 @@ type UserResponse struct {
 
 func newUserResponse(user Anuskh.User) UserResponse {
 	return UserResponse{
-		Username: user.Username,
-		FullName: user.FullName,
-		Email:    user.Email,
+		Username:          user.Username,
+		FullName:          user.FullName,
+		Email:             user.Email,
 		PasswordChangedAt: user.PasswordChangedAt,
-		CreatedAt: user.CreatedAt,
+		CreatedAt:         user.CreatedAt,
 	}
 }
 func (server *Server) CreateUser(ctx *gin.Context) {
@@ -68,9 +68,9 @@ func (server *Server) CreateUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	
+
 	resp := newUserResponse(user)
-		ctx.JSON(http.StatusOK, resp)
+	ctx.JSON(http.StatusOK, resp)
 }
 
 type LoginUserRequest struct {
@@ -92,8 +92,8 @@ func (server *Server) LoginUser(ctx *gin.Context) {
 		return
 	}
 	user, err := server.store.GetUser(ctx, req.Username)
-	if err != nil{
-		if err == sql.ErrNoRows{
+	if err != nil {
+		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}
@@ -101,7 +101,7 @@ func (server *Server) LoginUser(ctx *gin.Context) {
 		return
 	}
 	err = util.CheckPassword(req.Password, user.HashedPassword)
-	if err != nil{
+	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
 	}
@@ -110,14 +110,14 @@ func (server *Server) LoginUser(ctx *gin.Context) {
 		user.Username,
 		server.config.AccessTokenDuration,
 	)
-	if err !=nil{
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
 	res := LoginUserResponse{
 		AccessToken: accessToken,
-		User: newUserResponse(user),
+		User:        newUserResponse(user),
 	}
 
 	ctx.JSON(http.StatusOK, res)

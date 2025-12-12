@@ -13,10 +13,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
-	mockDB "github.com/nilesh0729/OrdinaryBank/db/Mock"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/token"
-	"github.com/nilesh0729/OrdinaryBank/util"
+	mockDB "github.com/nilesh0729/Transactly/db/Mock"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/token"
+	"github.com/nilesh0729/Transactly/util"
 	"github.com/stretchr/testify/require"
 )
 
@@ -122,7 +122,7 @@ func TestGetAccountAPI(t *testing.T) {
 			request, err := http.NewRequest(http.MethodGet, url, nil)
 			require.NoError(t, err)
 
-			tc.setAuth(t, request,server.tokenMaker)
+			tc.setAuth(t, request, server.tokenMaker)
 
 			server.router.ServeHTTP(recorder, request)
 			// check response
@@ -202,7 +202,7 @@ func TestPostAccountAPI(t *testing.T) {
 				"Balance":  0,
 			},
 			setAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-				addAuthorization(t, request, tokenMaker, authorizationTypeBearer,user.Username, time.Minute)
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
 			},
 			buildStubs: func(store *mockDB.MockStore) {
 				store.EXPECT().
@@ -239,7 +239,7 @@ func TestPostAccountAPI(t *testing.T) {
 			request, err := http.NewRequest(http.MethodPost, url, body)
 			require.NoError(t, err)
 
-			tc.setAuth(t,request,Server.tokenMaker)
+			tc.setAuth(t, request, Server.tokenMaker)
 
 			Server.router.ServeHTTP(recorder, request)
 

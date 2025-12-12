@@ -8,8 +8,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	Anuskh "github.com/nilesh0729/OrdinaryBank/db/Result"
-	"github.com/nilesh0729/OrdinaryBank/token"
+	Anuskh "github.com/nilesh0729/Transactly/db/Result"
+	"github.com/nilesh0729/Transactly/token"
 )
 
 type TransferRequest struct {
@@ -23,19 +23,19 @@ func (server *Server) CreateTransfer(ctx *gin.Context) {
 	var req TransferRequest
 
 	err := ctx.ShouldBindJSON(&req)
-	
+
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
 	account, valid := server.AccountValidator(ctx, req.FromAccountId, req.Currency)
-	if !valid{
+	if !valid {
 		return
 	}
 
 	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
-	if account.Owner != authPayload.Username{
+	if account.Owner != authPayload.Username {
 		err := errors.New("transfer Account doesn't belong to Authenticated User")
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
@@ -65,7 +65,7 @@ func (Server *Server) AccountValidator(ctx *gin.Context, accountID int64, curren
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
-			return account,false
+			return account, false
 		}
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return account, false
