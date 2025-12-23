@@ -7,30 +7,28 @@ import (
 )
 
 type Config struct {
-	DBDriver              string        `mapstructure:"DB_DRIVER"`
-	DBSource              string        `mapstructure:"DB_SOURCE"`
-	ServerAddress         string        `mapstructure:"SERVER_ADDRESS"`
-	TokenSymmetricKey     string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
+	DBDriver            string        `mapstructure:"DB_DRIVER"`
+	DBSource            string        `mapstructure:"DB_SOURCE"`
+	ServerAddress       string        `mapstructure:"SERVER_ADDRESS"`
+	TokenSymmetricKey   string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 	AccessTokenDuration time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 }
 
-
 func LoadConfig(path string) (config Config, err error) {
-    viper.AddConfigPath(path)      // Look in the path passed in
-    viper.AddConfigPath(".")       // Look in current directory (backup)
-    viper.AddConfigPath("../")     // Look one folder up
-    viper.AddConfigPath("../..")   // Look two folders up (Finds root from internal/db/...)
-    viper.AddConfigPath("../../..")// Look three folders up (Just in case)
+	viper.AddConfigPath(path)       // Look in the path passed in
+	viper.AddConfigPath(".")        // Look in current directory (backup)
+	viper.AddConfigPath("../")      // Look one folder up
+	viper.AddConfigPath("../..")    // Look two folders up (Finds root from internal/db/...)
+	viper.AddConfigPath("../../..") // Look three folders up (Just in case)
 
-    viper.SetConfigName(".env")     // Ideally rename your .env to app.env to avoid confusion
-    viper.SetConfigType("env") 
+	viper.SetConfigFile(".env")
 
-    // IF you want to keep the file named strictly ".env", use this instead of SetConfigName:
-    // viper.SetConfigFile(".env") 
-    
-    viper.AutomaticEnv()
+	// IF you want to keep the file named strictly ".env", use this instead of SetConfigName:
+	// viper.SetConfigFile(".env")
 
-    err = viper.ReadInConfig()
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
 	if err != nil {
 		return
 	}

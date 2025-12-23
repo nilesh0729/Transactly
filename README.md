@@ -1,138 +1,126 @@
-<a name="readme-top"></a>
+# OrdinaryBank (Transactly)
 
-<div align="center">
-  <img src="https://img.icons8.com/fluency/96/null/bank-building.png" alt="Transactly Logo" width="80" height="80">
+OrdinaryBank is a comprehensive banking application that allows users to create accounts, manage transfers, and track their financial transactions. This project demonstrates a robust full-stack implementation using Go for the backend and React for the frontend.
 
-  <h3 align="center">Transactly</h3>
+## 🚀 Technology Stack
 
-  <p align="center">
-    A Secure, High-Performance Banking Service API
-    <br />
-    <br />
-    <br />
-    <a href="#getting-started">View Demo</a>
-    ·
-    <a href="https://github.com/nilesh0729/transactly/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/nilesh0729/transactly/issues">Request Feature</a>
-  </p>
-</div>
+### Backend
+- **Language**: Go (Golang) 1.24
+- **Framework**: [Gin](https://gin-gonic.com/) (HTTP web framework)
+- **Database**: PostgreSQL 18
+- **ORM/Query Builder**: [SQLC](https://sqlc.dev/) (Type-safe SQL compiler)
+- **Authentication**: PASETO (Platform-Agnostic Security Tokens)
+- **Migrations**: Golang Migrate
 
-## 🏦 About The Project
+### Frontend
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: CSS (Modular)
+- **HTTP Client**: Axios
 
-**Transactly** is a robust backend banking system designed to simulate core financial operations. It focuses on data integrity, high concurrency, and security.
+### DevOps & Tools
+- **Containerization**: Docker
+- **Orchestration**: Docker Compose
+- **Testing**: Testify, MockGen
 
-The system handles the creation of user accounts, records balance changes, and performs safe money transfers between accounts using database transactions (ACID).
+## 🛠️ Prerequisites
 
-### Key Features
+Ensure you have the following installed:
+- [Docker](https://docs.docker.com/get-docker/) & Docker Compose
+- [Go](https://go.dev/dl/) 1.24+ (for local development)
+- [Node.js](https://nodejs.org/) & NPM (for frontend development)
 
-* **Multi-Method Authentication:** Supports both **JWT** and **PASETO** tokens for secure, stateless user sessions.
-* **Safe Money Transfers:** Implements database transactions to ensure money is never lost during transfers, even in high-concurrency scenarios.
-* **Account Management:** Create accounts, list balances, and track transaction history.
-* **RESTful API:** Clean and structured API endpoints served via the Gin framework.
+## 🏁 Getting Started
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Method 1: Docker Compose (Recommended)
 
-### 🛠️ Built With
+The easiest way to run the entire application (Database, Backend API, Frontend) is using Docker Compose.
 
-* ![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white) **Golang** - Core language.
-* ![Gin](https://img.shields.io/badge/gin-%23008FC7.svg?style=for-the-badge&logo=go&logoColor=white) **Gin Gonic** - HTTP Web Framework.
-* ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) **PostgreSQL** - Relational Database.
-* ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) **Docker** - Containerization.
-* **PASETO** - Platform-Agnostic Security Tokens.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## 🚀 Getting Started
-
-To run Transactly locally, you will need **Docker** and **Go** installed.
-
-### Prerequisites
-
-* Go 1.21+
-* Docker Desktop
-* Make (Optional, for running makefile commands)
-
-### Installation
-
-1.  **Clone the repo**
-    ```sh
-    git clone [https://github.com/your_username/transactly.git](https://github.com/your_username/transactly.git)
-    cd transactly
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/nilesh0729/Transactly.git
+    cd Transactly
     ```
 
-2.  **Setup Environment Variables**
-    Create a `.env` file in the root directory:
-    ```env
-    DB_DRIVER=postgres
-    DB_SOURCE=postgresql://root:secret@localhost:5432/transactly?sslmode=disable
-    SERVER_ADDRESS=0.0.0.0:8080
-    TOKEN_SYMMETRIC_KEY=12345678901234567890123456789012
-    ACCESS_TOKEN_DURATION=15m
+2.  **Set up Environment Variables:**
+    Copy the example environment file:
+    ```bash
+    cp .env.example .env
+    ```
+    *Note: The defaults in `docker-compose.yml` work out-of-the-box, but you can customize `.env` if needed.*
+
+3.  **Start the Application:**
+    ```bash
+    docker-compose up --build
     ```
 
-3.  **Start the Database**
-    ```sh
-    docker-compose up -d postgres
-    ```
+4.  **Access the App:**
+    - Frontend: `http://localhost:80`
+    - Backend API: `http://localhost:8080`
 
-4.  **Run Migrations**
-    ```sh
-    make migrateup
-    ```
+### Method 2: Manual Setup (Local Development)
 
-5.  **Start the Server**
-    ```sh
-    go run main.go
-    ```
+If you prefer to run services individually for development.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+#### 1. Database Setup
+Start a Postgres container and run migrations.
 
-## 📖 API Reference
+```bash
+# Start Postgres container (uses default 'root' user and 'secret' password from simple Makefile)
+make Container
 
-Here is a quick overview of the main endpoints.
+# Create Database
+make Createdb
 
-### Users & Auth
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :---: |
-| `POST` | `/users` | Create a new user | ❌ |
-| `POST` | `/users/login` | Login and receive Access Token | ❌ |
+# Run Migrations
+make MigrateUp
+```
 
-### Accounts
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :---: |
-| `POST` | `/accounts` | Create a new bank account | ✅ |
-| `GET` | `/accounts/:id` | Get specific account details | ✅ |
-| `GET` | `/accounts` | List accounts (with pagination) | ✅ |
+#### 2. Backend Setup
+Run the Go API server.
 
-### Transfers
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :---: |
-| `POST` | `/transfers` | Transfer money between accounts | ✅ |
+```bash
+# Install dependencies
+go mod tidy
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+# Run the server
+make Server
+# OR
+go run cmd/api/main.go
+```
+The server will start on `http://localhost:8080`.
 
-## 🗄️ Database Schema
+#### 3. Frontend Setup
+Run the React application.
 
-The project uses a normalized PostgreSQL schema with the following core entities:
-* **Users:** Stores secure password hashes (bcrypt) and user info.
-* **Accounts:** Holds balance and currency information, linked to Users.
-* **Entries:** Records all account balance changes (Audit trail).
-* **Transfers:** Records money movement between two accounts.
+```bash
+cd frontend
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+# Install dependencies
+npm install
 
-## 🤝 Contributing
+# Start development server
+npm run dev
+```
+The frontend will start on the URL provided by Vite (usually `http://localhost:5173`).
 
-Contributions are welcome!
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
+## ⚙️ Configuration
 
-## 📄 License
+The application uses environment variables for configuration. See `.env.example` for reference.
 
-Distributed under the MIT License. See `LICENSE` for more information.
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `DB_DRIVER` | Database driver | `postgres` |
+| `DB_SOURCE` | Postgres connection string | `postgresql://...` |
+| `SERVER_ADDRESS` | Address for the API to listen on | `0.0.0.0:8080` |
+| `TOKEN_SYMMETRIC_KEY`| Secret key for token signing | *Change this!* |
+| `ACCESS_TOKEN_DURATION`| Token validity duration | `15m` |
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## 🧪 Development Commands
+
+The `Makefile` provides several helpful commands for development:
+
+- `make Test`: Run Go tests.
+- `make Sqlc`: Generate Go code from SQL queries using SQLC.
+- `make Mock`: Generate mocks for testing.
+- `make MigrateUp` / `make MigrateDown`: Manage database migrations.
