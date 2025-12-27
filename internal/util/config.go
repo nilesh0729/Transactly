@@ -21,8 +21,7 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath("../..")    // Look two folders up (Finds root from internal/db/...)
 	viper.AddConfigPath("../../..") // Look three folders up (Just in case)
 
-	viper.SetConfigName("app")
-	viper.SetConfigType("env")
+	viper.SetConfigFile(".env")
 
 	// IF you want to keep the file named strictly ".env", use this instead of SetConfigName:
 	// viper.SetConfigFile(".env")
