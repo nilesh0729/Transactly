@@ -1,40 +1,67 @@
 # OrdinaryBank (Transactly)
 
-OrdinaryBank is a comprehensive banking application that allows users to create accounts, manage transfers, and track their financial transactions. This project demonstrates a robust full-stack implementation using Go for the backend and React for the frontend.
+OrdinaryBank (Transactly) is a robust, full-stack banking application designed to demonstrate secure and efficient financial transaction handling. It features a modern Go backend and a responsive React frontend, allowing users to create accounts, managing funds, and audit transaction histories.
+
+## 📸 Application Screenshots
+
+Explore the user interface and workflow of the application:
+
+### 1. Authentication
+Secure login and registration flows to protect user accounts.
+
+| Login Page | Registration Page |
+|:---:|:---:|
+| <img src="assets/images/login.png" alt="Login Page" width="400"/> | <img src="assets/images/register.png" alt="Registration Page" width="400"/> |
+
+### 2. Dashboard
+A unified view of all user accounts and balances.
+
+<div align="center">
+  <img src="assets/images/dashboard.png" alt="User Dashboard" width="800"/>
+</div>
+
+### 3. Transactions
+Seamlessly transfer funds between accounts and audit transaction logs.
+
+| Fund Transfer | Transaction History |
+|:---:|:---:|
+| <img src="assets/images/transfer.png" alt="Transfer Page" width="400"/> | <img src="assets/images/history.png" alt="History Page" width="400"/> |
+
+---
 
 ## 🚀 Technology Stack
 
 ### Backend
 - **Language**: Go (Golang) 1.24
 - **Framework**: [Gin](https://gin-gonic.com/) (HTTP web framework)
-- **Database**: PostgreSQL 18
-- **ORM/Query Builder**: [SQLC](https://sqlc.dev/) (Type-safe SQL compiler)
-- **Authentication**: PASETO (Platform-Agnostic Security Tokens)
+- **Database**: PostgreSQL
+- **ORM**: [SQLC](https://sqlc.dev/) (Type-safe SQL compiler)
+- **Security**: PASETO tokens for authentication
 - **Migrations**: Golang Migrate
 
 ### Frontend
 - **Framework**: React 18
 - **Build Tool**: Vite
-- **Styling**: CSS (Modular)
+- **Routing**: React Router DOM
 - **HTTP Client**: Axios
+- **Styling**: Modular CSS
 
-### DevOps & Tools
+### DevOps
 - **Containerization**: Docker
 - **Orchestration**: Docker Compose
-- **Testing**: Testify, MockGen
 
 ## 🛠️ Prerequisites
 
-Ensure you have the following installed:
+Before getting started, ensure you have the following installed:
 - [Docker](https://docs.docker.com/get-docker/) & Docker Compose
-- [Go](https://go.dev/dl/) 1.24+ (for local development)
-- [Node.js](https://nodejs.org/) & NPM (for frontend development)
+- [Go](https://go.dev/dl/) 1.24+ (Optional, for local Go development)
+- [Node.js](https://nodejs.org/) (Optional, for local Frontend development)
 
 ## 🏁 Getting Started
 
 ### Method 1: Docker Compose (Recommended)
 
-The easiest way to run the entire application (Database, Backend API, Frontend) is using Docker Compose.
+Run the entire stack (Database, Backend, Frontend) with a single command.
 
 1.  **Clone the repository:**
     ```bash
@@ -43,11 +70,10 @@ The easiest way to run the entire application (Database, Backend API, Frontend) 
     ```
 
 2.  **Set up Environment Variables:**
-    Copy the example environment file:
     ```bash
     cp .env.example .env
     ```
-    *Note: The defaults in `docker-compose.yml` work out-of-the-box, but you can customize `.env` if needed.*
+    *Modify `.env` if you need custom database credentials or secrets.*
 
 3.  **Start the Application:**
     ```bash
@@ -55,18 +81,17 @@ The easiest way to run the entire application (Database, Backend API, Frontend) 
     ```
 
 4.  **Access the App:**
-    - Frontend: `http://localhost:80`
-    - Backend API: `http://localhost:8080`
+    - **Frontend**: http://localhost:80
+    - **Backend API**: http://localhost:8080
 
-### Method 2: Manual Setup (Local Development)
+### Method 2: Manual Setup
 
-If you prefer to run services individually for development.
+<details>
+<summary>Click to expand manual setup instructions</summary>
 
 #### 1. Database Setup
-Start a Postgres container and run migrations.
-
 ```bash
-# Start Postgres container (uses default 'root' user and 'secret' password from simple Makefile)
+# Start Postgres
 make Container
 
 # Create Database
@@ -77,50 +102,37 @@ make MigrateUp
 ```
 
 #### 2. Backend Setup
-Run the Go API server.
-
 ```bash
 # Install dependencies
 go mod tidy
 
-# Run the server
+# Run server
 make Server
-# OR
-go run cmd/api/main.go
 ```
-The server will start on `http://localhost:8080`.
 
 #### 3. Frontend Setup
-Run the React application.
-
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
-The frontend will start on the URL provided by Vite (usually `http://localhost:5173`).
+</details>
 
 ## ⚙️ Configuration
 
-The application uses environment variables for configuration. See `.env.example` for reference.
+Key environment variables in `.env`:
 
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `DB_DRIVER` | Database driver | `postgres` |
-| `DB_SOURCE` | Postgres connection string | `postgresql://...` |
-| `SERVER_ADDRESS` | Address for the API to listen on | `0.0.0.0:8080` |
-| `TOKEN_SYMMETRIC_KEY`| Secret key for token signing | *Change this!* |
-| `ACCESS_TOKEN_DURATION`| Token validity duration | `15m` |
+| Variable | Description |
+| :--- | :--- |
+| `DB_SOURCE` | PostgreSQL connection string |
+| `SERVER_ADDRESS` | API Listen Address (e.g., `0.0.0.0:8080`) |
+| `TOKEN_SYMMETRIC_KEY` | Secret key for signing tokens (Must be 32 chars) |
 
 ## 🧪 Development Commands
 
-The `Makefile` provides several helpful commands for development:
+Common `Makefile` commands:
 
-- `make Test`: Run Go tests.
-- `make Sqlc`: Generate Go code from SQL queries using SQLC.
-- `make Mock`: Generate mocks for testing.
-- `make MigrateUp` / `make MigrateDown`: Manage database migrations.
+- `make Test`: Run backend tests
+- `make Sqlc`: Regenerate SQLC code
+- `make Mock`: Generate mocks
+- `make MigrateUp`: Apply database migrations
